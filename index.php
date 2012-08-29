@@ -7,18 +7,17 @@
 <html>
 <head>
 <title><?php echo $rootFolder."/".$query;?></title>
-
 <link rel="stylesheet" type="text/css" href=".wls/style.css">
+<link rel="stylesheet" type="text/css" href=".wls/wls-style.css">
 <script type="text/javascript" src=".wls/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src=".wls/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src=".wls/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src=".wls/jquery.tablesorter-2.0.5.min.js"></script>
 <script type="text/javascript" src=".wls/jquery.metadata.js"></script>
 
 <script>
 $(document).ready(function() {
-	$("table").tablesorter({debug: true})
-	
-	var e= parseInt($(".title").css("width"));	
+	$("table").tablesorter({cancelSelection: true})	
+	var e = parseInt($(".title").css("width"));	
     var ef = parseInt($(".title").css("height"));	
 	while (e > document.width) {
 		var fs = parseInt($(".title").css("font-size")) - 1;
@@ -73,7 +72,7 @@ $(document).ready(function() {
 	</div>		
 	<br><br><br>
 <?php
-	// read comments
+	// read comment file
 	$comments = readPropFile($fullPath.".comment");			
 	// add page description
 	if($comments != null)	
@@ -178,7 +177,7 @@ function addFileToList($path, $file, $comment, $dir){
 	$d  = "<tr style='height: 25px; padding: 0px 5px 0px 5px;'>";
 	$d .= 	"<td class='col1 colCommon'><a class='a1' href='".$href."'>".$label."</a></td>";	
 	$d .= 	"<td class='col2 colCommon ".foldericon."'>".($dir? "" : format_bytes(filesize($path.$file)))."</td>";
-	$d .=	"<td class='col3 colCommon'>".($dir? "-" : (date("M d, Y h:i A", filemtime($path.$file))))."</td>";	
+	$d .=	"<td class='col3 colCommon'>".($dir? "" : (date("M d, Y h:i A", filemtime($path.$file))))."</td>";	
 	if($comment)			
 		$d .=	"<td class='col4 colCommon'><div><center>".$comment."</center></div></td>";
 	else
