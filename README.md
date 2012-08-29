@@ -3,7 +3,7 @@ wls 1.0
 Web Directory Listing
 =====================
 
-![wls](/test/screen-1.png)
+![wls](https://raw.github.com/prashanta/wls/master/test/screen-1.png)
 
 ###Installation
 
