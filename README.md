@@ -4,12 +4,12 @@ Web Directory Listing
 =====================
 <br>
 <br>
-Installation
-------------
+
+###Installation
+
 Copy the contents of <b>wls</b> to the director that you want to have it managed. All the consequent sub folders will be managed. Yup, thats it.
 	  
-Which files are ignored?
-------------------------
+###Which files are ignored?
 - index.php
 - Any file/folder that begins with "."
 
