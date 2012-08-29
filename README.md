@@ -14,6 +14,6 @@ Copy the contents of <b>wls</b> to the director that you want to have it managed
 - Any file/folder that begins with "."
 
 
-Thanks to:
+3rd Party:
 
 - tablesorter: http://tablesorter.com/docs/
