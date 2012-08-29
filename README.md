@@ -2,8 +2,6 @@ wls 1.0
 =======
 Web Directory Listing
 =====================
-<br>
-<br>
 
 ###Installation
 
