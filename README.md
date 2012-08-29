@@ -16,4 +16,4 @@ Copy the contents of <b>wls</b> to the director that you want to have it managed
 
 3rd Party:
 
-- tablesorter: http://tablesorter.com/docs/
+- tablesorter: http://tablesorter.com/docs/ 
