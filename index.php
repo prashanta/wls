@@ -1,7 +1,8 @@
 <?php
 	$query = $_SERVER['QUERY_STRING']; 		    
-	$rootFolder = substr(dirname($_SERVER["PHP_SELF"]),1);
+	$rootFolder = substr(dirname($_SERVER["PHP_SELF"]),1);	
 	$commentFile = ".comment";
+	$statFile = ".statFile";
 	$query = str_replace("%20", " ", $query);
 ?>
 <html>
@@ -15,7 +16,9 @@
 <script type="text/javascript" src=".wls/jquery.metadata.js"></script>
 
 <script>
+/* STUFFS TO DO AFTER EVERYTHING LOADS */
 $(document).ready(function() {
+	/* Activate table sorter */
 	$("table").tablesorter({cancelSelection: true})	
 	var e = parseInt($(".title").css("width"));	
     var ef = parseInt($(".title").css("height"));	
@@ -28,7 +31,11 @@ $(document).ready(function() {
 		var fs = parseInt($(".title").css("font-size")) - 1;
 		$(".title").css("font-size",fs+"px");
 		ef= parseInt($(".title").css("height"));	
-	}		
+	}
+	/* Link the linkables */
+	$(".a1").click(function() {
+  		//alert("going to : " + $(this).attr("href"));
+	});
 });
 </script>
 </head>
@@ -36,8 +43,8 @@ $(document).ready(function() {
 
 <?php
 	if($query!=null && !is_dir($query)){
-		echo "<span class='error'>Whoops! Location [<b>".$rootFolder."/".$query."</b>] could not be found!<br></span>";
-		echo "<span class='error'>Goto <a href='".dirname($_SERVER["PHP_SELF"])."'>root folder</a></span>" ;
+		echo "<div class='error'><span style='font-size: 30px'>404 occured!<br><br></span>";
+		echo "<span>{ <b>".$rootFolder."/".$query."</b> } could not be found!<br>Goto <a href='".dirname($_SERVER["PHP_SELF"])."'>root folder</a></span></div>" ;
 		return;
 	}	
 	
@@ -72,12 +79,20 @@ $(document).ready(function() {
 	</div>		
 	<br><br><br>
 <?php
-	// read comment file
-	$comments = readPropFile($fullPath.".comment");			
+	// read files
+	$comments = readPropFile($fullPath.$commentFile);			
+	$stats = readPropFile($fullPath.$statFile);			
+	
 	// add page description
 	if($comments != null)	
 		echo "<div class='page-desc'>".$comments['pageDescription']."</div>";
 		
+	// add page description
+	if($stats == null){
+		//echo "<div>No statfile!</div>";	
+    	// if in options, create_statfile_enabled create sat file
+    }
+	
 	$filecount = 0;
 	$dircount = 0;
 	$tfs = 0;
@@ -86,7 +101,7 @@ $(document).ready(function() {
 	$h = "";
 	$files1 = scandir($fullPath);	
 	if(count($files1) < 3){
-		echo "<span class='error'>This folder is empty!</span>";
+		echo "<span class='error'>Nothing to see here yet!</span>";
 		return;
 	}
 ?>	
@@ -94,9 +109,10 @@ $(document).ready(function() {
 		<thead> 
 			<tr style="height: 30px;"> 
 				<th class="col1 list-header colCommon">Name</th>
-				<th class="col2 list-header colCommon">Size</th>
-				<th class="col3 list-header colCommon {sorter: 'date'}">Last Modified Date</th>
-				<th class="col4 list-header colCommon">Comment</th>
+				<th class="col2 list-header colCommon">Kind</th>
+				<th class="col3 list-header colCommon">Size</th>
+				<th class="col4 list-header colCommon {sorter: 'date'}">Last Modified Date</th>
+				<th class="col5 list-header colCommon">Comment</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -133,9 +149,12 @@ $(document).ready(function() {
 </html>
 
 <?php
-/* SOME PHP HELPERS */
 
-/* Read Property File*/ 
+/*  ============================================================
+    SOME PHP HELPERS    
+    ============================================================ */ 
+
+/* GENERIC READ PROPERTY FILE*/ 
 function readPropFile($file)
 {
 	$ret = null;
@@ -161,7 +180,7 @@ function readPropFile($file)
 	return $ret;
 }
 
-/* Add a row to table list */
+/* ADD A ROW TO SORTABLE */
 function addFileToList($path, $file, $comment, $dir){			
 	$href = "";			
 	$label = $file;
@@ -173,15 +192,16 @@ function addFileToList($path, $file, $comment, $dir){
 		$href = $path.$file;
 		$label = "<i>".$file."</i>";
 	}
-	$fi = ($dir? "foldericon" : "");
+	$ext = ($dir? "" : substr($file,strrpos($file, ".")+1));
 	$d  = "<tr style='height: 25px; padding: 0px 5px 0px 5px;'>";
 	$d .= 	"<td class='col1 colCommon'><a class='a1' href='".$href."'>".$label."</a></td>";	
-	$d .= 	"<td class='col2 colCommon ".foldericon."'>".($dir? "" : format_bytes(filesize($path.$file)))."</td>";
-	$d .=	"<td class='col3 colCommon'>".($dir? "" : (date("M d, Y h:i A", filemtime($path.$file))))."</td>";	
+	$d .= 	"<td class='col2 colCommon'>".$ext."</td>";
+	$d .= 	"<td class='col3 colCommon'>".($dir? "" : format_bytes(filesize($path.$file)))."</td>";
+	$d .=	"<td class='col4 colCommon'>".($dir? "" : (date("M d, Y h:i A", filemtime($path.$file))))."</td>";	
 	if($comment)			
-		$d .=	"<td class='col4 colCommon'><div><center>".$comment."</center></div></td>";
+		$d .=	"<td class='col5 colCommon'><div><center>".$comment."</center></div></td>";
 	else
-		$d .=	"<td class='col4 colCommon'></td>";	
+		$d .=	"<td class='col5 colCommon'></td>";	
 	$d .= "</tr>";				
 	return $d;
 }
