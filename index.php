@@ -44,7 +44,7 @@ $(document).ready(function() {
 	});
 	var _this = this;
 	$(".filter-text").click(function() {
-        var filter = $(this).text();
+        var filter = $(this).attr("id");
   		$(".trow").hide();
   		if(filter == "ALL")
   		    $(".trow").show();
@@ -148,9 +148,9 @@ $(document).ready(function() {
         var filtertypes = new Array(<?php echo $filtertypes; ?>);
         var filtercounts = new Array(<?php echo $filtercounts; ?>);        
         $(filtertypes).each(function(index) {
-            $("#filter").append("<span class='filter-text'>"+this+"</span>");
+            $("#filter").append("<span class='filter-text' id='"+this+"'><b>"+this+"</b> ["+filtercounts[index]+"]</span>");
         });        
-        $("#filter").append("<span class='filter-text'>ALL</span>");
+        $("#filter").append("<span class='filter-text' id='ALL'><b>ALL</b></span>");
     </script>
 <?php
 	echo $h;

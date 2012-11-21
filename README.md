@@ -16,3 +16,5 @@ Copy the contents of <b>wls</b> to the director that you want to have it managed
 ----------------------------
 - jQuery: http://jquery.com/ 
 - tablesorter: http://tablesorter.com/docs/ 
+
+Demo: http://prashanta.me/wls
