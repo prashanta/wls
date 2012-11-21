@@ -140,17 +140,26 @@ $(document).ready(function() {
 		$filetypes[$index] = $ext;
 		$h .= addFileToList($query, $file, $ext, $comment, is_dir($fullPath.$file), $index++);        						
     }
-    $h .= "</tbody></table>";    
+    $h .= "</tbody></table>";
+    $ftc = array_count_values($filetypes);    
     $filtertypes = '"'.implode('","',array_keys(array_count_values($filetypes))).'"';
     $filtercounts = implode(",",array_values(array_count_values($filetypes)));
+//    var_dump($filtertypes);
+//    var_dump($filtercounts);
 ?>
     <script>
-        var filtertypes = new Array(<?php echo $filtertypes; ?>);
-        var filtercounts = new Array(<?php echo $filtercounts; ?>);        
-        $(filtertypes).each(function(index) {
-            $("#filter").append("<span class='filter-text' id='"+this+"'><b>"+this+"</b> ["+filtercounts[index]+"]</span>");
-        });        
-        $("#filter").append("<span class='filter-text' id='ALL'><b>ALL</b></span>");
+        <?php
+            if(count($ftc)>1){
+        ?>    
+                var filtertypes = new Array(<?php echo $filtertypes; ?>);
+                var filtercounts = new Array(<?php echo $filtercounts; ?>);        
+                $(filtertypes).each(function(index) {
+                    $("#filter").append("<span class='filter-text' id='"+this+"'><b>"+this+"</b> ["+filtercounts[index]+"]</span>");
+                });        
+                $("#filter").append("<span class='filter-text' id='ALL'><b>ALL</b></span>");
+        <?php
+            }
+        ?>
     </script>
 <?php
 	echo $h;
