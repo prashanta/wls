@@ -5,7 +5,7 @@
 
 ### About
 ---------
-__wls__ is a minimalistic approach to directory listing. In fact was has just has six key features:
+__wls__ is a minimalistic approach to directory listing. It has six fundamental features:
 
 1. Multiple sort table
 2. Breadcrumb navigation
