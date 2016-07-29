@@ -16,8 +16,6 @@ __wls__ is a minimalistic approach to directory listing. It has six fundamental 
 
 The size of entire package is under _300KB_.
 
-Demo: http://prashanta.me/wls
-
 ### Installation
 ---
 Copy the contents of <b>wls</b> to the director that you want to have it managed. All the consequent sub folders will be managed. 
